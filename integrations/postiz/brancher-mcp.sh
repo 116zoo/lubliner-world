@@ -5,7 +5,9 @@
 #   ./brancher-mcp.sh "DCODENFER"     -> ajoute le serveur MCP postiz-dcodenfer
 set -euo pipefail
 
-psql() { docker exec -i postiz-postgres psql -U postiz-user -d postiz-db-local -tA "$@"; }
+PG=$(docker ps --format '{{.Names}}' | grep -E '(^|_)postiz-postgres$' | head -1)
+[ -n "$PG" ] || { echo "Conteneur Postgres de Postiz introuvable (docker ps)." >&2; exit 1; }
+psql() { docker exec -i "$PG" psql -U postiz-user -d postiz-db-local -tA "$@"; }
 
 if [ $# -eq 0 ]; then
   echo "Organisations disponibles :"
