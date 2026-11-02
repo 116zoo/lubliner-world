@@ -25,7 +25,7 @@ CHANNELS = {
     "instagram.md": ("instagram", {"post_type": "post"}),
     "linkedin.md": ("linkedin", {}),
     "facebook.md": ("facebook", {}),
-    "gmb.md": ("googlebusiness", {"topicType": "STANDARD"}),
+    "gmb.md": ("gmb", {"topicType": "STANDARD"}),
 }
 
 
