@@ -40,11 +40,28 @@ def call(path, payload=None):
         return json.load(r)
 
 
+def upload(path):
+    """Téléverse une image dans Postiz (multipart) ; renvoie {id, path}."""
+    boundary = "----pp" + os.urandom(8).hex()
+    body = (
+        f'--{boundary}\r\nContent-Disposition: form-data; name="file"; filename="{path.name}"\r\n'
+        "Content-Type: image/webp\r\n\r\n"
+    ).encode() + path.read_bytes() + f"\r\n--{boundary}--\r\n".encode()
+    req = urllib.request.Request(
+        f"{URL}/api/public/v1/upload", data=body, method="POST",
+        headers={"Authorization": KEY, "Content-Type": f"multipart/form-data; boundary={boundary}"},
+    )
+    with urllib.request.urlopen(req, timeout=60) as r:
+        res = json.load(r)
+    return {"id": res["id"], "path": res["path"]}
+
+
 def main():
     dry = "--dry-run" in sys.argv
     if not KEY and not dry:
         sys.exit("POSTIZ_API_KEY manquante (voir brancher-mcp.sh ou Paramètres > Public API dans Postiz).")
     integrations = [] if dry else call("integrations")
+    image = None if dry else upload(ROOT / "assets" / "salle-polyvalente.webp")
     for name, (needle, settings) in CHANNELS.items():
         content = (SOCIAL / name).read_text(encoding="utf-8").strip()
         target = next((i for i in integrations if needle in (i.get("identifier") or "").lower()), None)
@@ -59,7 +76,7 @@ def main():
                 "date": datetime.now(timezone.utc).isoformat(),
                 "tags": [],
                 "posts": [
-                    {"integration": {"id": target["id"]}, "settings": settings, "value": [{"content": content, "image": []}]}
+                    {"integration": {"id": target["id"]}, "settings": settings, "value": [{"content": content, "image": [image] if image else []}]}
                 ],
             },
         )
