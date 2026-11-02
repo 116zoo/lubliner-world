@@ -1,0 +1,1 @@
+Anniversaire, réunion d'équipe, séminaire ou camp de base : notre loft parisien s'adapte à votre événement. Lumière naturelle, sol blanc, mezzanine, coin salon et sono. Demandez votre devis sur parisprivate.fr
