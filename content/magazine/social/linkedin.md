@@ -4,6 +4,8 @@ Un loft lumineux, modulable et équipé (vidéoprojecteur, sono, coin salon) per
 
 Nous détaillons les critères de choix (lumière, modularité, équipement, règles ERP type L) dans notre article du magazine.
 
-Un séminaire ou une réunion d'équipe à organiser ? Écrivez-nous. 👉 parisprivate.fr
+Un séminaire ou une réunion d'équipe à organiser ?
+
+👉 Demander un devis : parisprivate.fr
 
 #Seminaire #EvenementEntreprise #Paris #TeamBuilding #LieuAtypique
