@@ -204,6 +204,56 @@ def main():
         else:
             reste += f(fa.get("total_ttc")) - paye_ttc
 
+    # --- Recap CEO : indicateurs d'action
+    now_ts = datetime.now(timezone.utc).timestamp()
+    ouverts = [d for d in devis if status(d) == 1]
+    amt_ouv = sum(f(d.get("total_ht")) for d in ouverts)
+    ouv_vieux = [d for d in ouverts if d.get("date") and now_ts - int(d["date"]) > 30 * 86400]
+    impayees, retard = [], []
+    for fa in factures:
+        if status(fa) < 1 or int(fa.get("type") or 0) == 2 or int(fa.get("paye") or 0) == 1:
+            continue
+        du = f(fa.get("total_ttc")) - f(fa.get("totalpaid"))
+        impayees.append((du, fa))
+        lim = fa.get("date_lim_reglement")
+        if lim and int(lim) < now_ts:
+            retard.append((du, fa))
+    amt_retard = sum(d for d, _ in retard)
+    gros = sorted(impayees, key=lambda x: -x[0])[:3]
+
+    actions = []
+    if n_fac and n_paye == 0:
+        actions.append(("Rapprocher les paiements", f"Aucune des {n_fac} factures n'est marquée payée dans Dolibarr. Vérifier le relevé bancaire et saisir les règlements reçus pour fiabiliser le reste à encaisser ({eur(reste)} TTC)."))
+    if retard:
+        actions.append(("Relancer les factures échues", f"{len(retard)} facture(s) dépassent leur échéance, soit {eur(amt_retard)} TTC. Relance par mail cette semaine, puis appel au-delà de 15 jours de retard."))
+    if gros:
+        liste = ", ".join(eur(d) for d, _ in gros)
+        actions.append(("Commencer par les plus gros montants", f"Les 3 plus gros restes à encaisser : {liste} TTC. Les traiter en priorité."))
+    if ouverts:
+        txt = f"{len(ouverts)} devis ouverts pour {eur(amt_ouv)} HT"
+        if ouv_vieux:
+            txt += f", dont {len(ouv_vieux)} en attente depuis plus de 30 jours"
+        actions.append(("Relancer les devis ouverts", txt + ". Appeler chaque client, obtenir une réponse (signé ou refusé) et mettre le statut à jour."))
+    if n_s[0] > 20:
+        actions.append(("Trier les brouillons", f"{n_s[0]} brouillons ({eur(amt_s[0])} HT) gonflent le pipeline sans être envoyés. Envoyer les devis valides, supprimer les doublons et les obsolètes."))
+    if emis and taux < 20:
+        actions.append(("Améliorer la transformation", f"Seuls {taux:.0f} % des devis émis sont signés. Après chaque envoi, relancer à J+3 et J+10 et noter le motif des refus."))
+    if n_pros > 3 * max(n_cli, 1):
+        actions.append(("Activer les prospects", f"{n_pros} prospects pour {n_cli} clients. Sélectionner les 20 plus pertinents et programmer un premier contact (appel ou mail) cette semaine."))
+
+    faits = [
+        f"{n_pros} prospects, {n_cli} clients.",
+        f"{emis} devis émis, {signes} signés ou facturés ({taux:.0f} % de transformation).",
+        f"{n_fac} factures émises, {eur(reste)} TTC restant à encaisser, {eur(encaisse)} TTC déjà encaissé.",
+    ]
+    recap_html = (
+        '<section class="recap"><h2>Synthèse pour la direction</h2><ul>'
+        + "".join(f"<li>{html.escape(x)}</li>" for x in faits)
+        + '</ul><h3>À faire cette semaine par la collaboratrice</h3><ol>'
+        + "".join(f"<li><strong>{html.escape(t)}.</strong> {html.escape(d)}</li>" for t, d in actions)
+        + "</ol></section>"
+    )
+
     def card(label, value, sub=""):
         s = f'<div class="sub">{html.escape(sub)}</div>' if sub else ""
         return f'<div class="card"><div class="v">{html.escape(str(value))}</div><div>{html.escape(label)}</div>{s}</div>'
@@ -227,9 +277,12 @@ h3{{font-size:.95rem;margin:1rem 0 .2rem;color:var(--muted);font-weight:600}}
 .axis{{stroke:var(--line);stroke-width:1}}
 .val{{font-size:11px;fill:var(--ink)}} .lab{{font-size:11px;fill:var(--muted)}} .lab2{{font-size:13px;fill:var(--ink)}} .big{{font-size:20px;font-weight:600;fill:var(--ink)}}
 .note{{font-size:.85rem;color:var(--muted)}}
+.recap{{background:var(--raised);border-left:4px solid var(--c2);border-radius:8px;padding:4px 18px 12px;margin-top:12px}}
+.recap h2{{border:0;margin:.8rem 0 .4rem}} .recap h3{{color:var(--ink);margin:1rem 0 .3rem}} .recap li{{margin:.35rem 0;line-height:1.45}}
 </style>
 <h1>Atelier des Abbesses : tableau de bord CEO</h1>
 <p class="note">Généré le {datetime.now().strftime('%d/%m/%Y %H:%M')} · source : Dolibarr (lecture seule) · {LAST_MONTHS} derniers mois</p>
+{recap_html}
 
 <h2>Prospection</h2>
 <div class="cards">{card('Prospects', n_pros)}{card('Clients', n_cli)}</div>
