@@ -1,0 +1,8 @@
+{
+  "name": "atelier-local",
+  "description": "Plugins locaux de l'Atelier des Abbesses",
+  "owner": {"name": "Atelier des Abbesses"},
+  "plugins": [
+    {"name": "atelier-abbesses", "description": "Cockpit Dolibarr, Postiz et Payload, onboarding d'équipe, finance et réseaux sociaux.", "source": "./atelier-abbesses", "category": "productivity"}
+  ]
+}

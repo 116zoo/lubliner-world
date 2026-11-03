@@ -1,0 +1,9 @@
+{
+  "name": "atelier-abbesses",
+  "displayName": "Atelier des Abbesses",
+  "version": "1.0.0",
+  "description": "Plugin local de l'Atelier des Abbesses, dérivé de small-business-fr : cockpit Dolibarr, Postiz et Payload CMS, onboarding d'équipe, skills de pilotage, ventes, finance et réseaux sociaux. Sans Shopify, stock ni expédition.",
+  "author": {"name": "Atelier des Abbesses"},
+  "license": "Apache-2.0",
+  "keywords": ["dolibarr","postiz","payload","evenementiel","tpe","france"]
+}

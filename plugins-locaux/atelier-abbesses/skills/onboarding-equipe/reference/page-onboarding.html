@@ -1,0 +1,365 @@
+<title>Onboarding Atelier des Abbesses</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Mise en page : bandeau d'en-tête, navigation collante à 4 ancres, puis une section par personne, chacune avec sa liste à cocher. */
+:root {
+  --bg: #f4f5f9;
+  --surface: #ffffff;
+  --fg: #0e1022;
+  --muted: #565b74;
+  --line: #dcdfeb;
+  --accent: #2f3fb5;
+  --accent-soft: #e6e9fa;
+  --ok: #1d7a4d;
+  --warn: #a4580a;
+  --warn-soft: #fbeedd;
+  --ceo: #2f3fb5;
+  --collab: #0f766e;
+  --stag: #9a3b78;
+  --f-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b0c18; --surface: #141629; --fg: #eceefa; --muted: #9aa0bd; --line: #282b45;
+    --accent: #8c9bff; --accent-soft: #1c2150; --ok: #5fcf97; --warn: #f0a85a; --warn-soft: #36240f;
+    --ceo: #8c9bff; --collab: #4fd1c5; --stag: #e58fc5; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0b0c18; --surface: #141629; --fg: #eceefa; --muted: #9aa0bd; --line: #282b45;
+  --accent: #8c9bff; --accent-soft: #1c2150; --ok: #5fcf97; --warn: #f0a85a; --warn-soft: #36240f;
+  --ceo: #8c9bff; --collab: #4fd1c5; --stag: #e58fc5; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--f-body); font-size: 17px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: var(--bg); z-index: 10; }
+.wrap { max-width: 920px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; line-height: 1.12; margin: 0; }
+h1 { font-size: clamp(2rem, 6vw, 3.1rem); font-weight: 700; letter-spacing: -0.02em; }
+h2 { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; letter-spacing: -0.01em; }
+h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: .5rem; }
+p { margin: 0 0 .75rem; max-width: 66ch; }
+a { color: var(--accent); }
+code, .mono { font-family: var(--f-mono); font-size: .85em; }
+.label { font-size: .75rem; text-transform: uppercase; letter-spacing: .12em; font-weight: 600; color: var(--muted); }
+
+header.top { padding-block: 3rem 2rem; }
+header.top p { font-size: 1.1rem; color: var(--muted); margin-top: 1rem; }
+.meta { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; margin-top: 1.25rem; font-size: .9rem; color: var(--muted); }
+
+nav.tabs {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg);
+  border-bottom: 1px solid var(--line); display: flex; gap: .25rem; overflow-x: auto; padding-block: .5rem;
+}
+nav.tabs a {
+  text-decoration: none; color: var(--fg); padding: .45rem .9rem; border-radius: 6px; font-weight: 600;
+  font-size: .95rem; white-space: nowrap; border: 1px solid transparent;
+}
+nav.tabs a:hover { background: var(--accent-soft); }
+nav.tabs a:focus-visible, .check input:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+section.part { padding-block: 3rem 1rem; border-bottom: 1px solid var(--line); }
+section.part > .intro { margin-top: .75rem; color: var(--muted); }
+.who { display: inline-block; padding: .2rem .65rem; border-radius: 99px; font-size: .78rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #fff; margin-bottom: .75rem; }
+#ceo .who { background: var(--ceo); } #collaboratrice .who { background: var(--collab); } #stagiaire .who { background: var(--stag); }
+:root[data-theme="dark"] .who, :root:not([data-theme="light"]) .who { color: #0b0c18; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .who { color: #fff; } }
+:root[data-theme="light"] .who { color: #fff; }
+
+.grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); margin-block: 1.25rem; }
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 1.1rem 1.2rem; min-width: 0; }
+.box p:last-child, .box ul:last-child { margin-bottom: 0; }
+ul, ol { padding-left: 1.2rem; margin: 0 0 .75rem; }
+li { margin-bottom: .3rem; }
+
+.stats { display: grid; gap: .75rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); margin-block: 1rem; }
+.stat { border-top: 3px solid var(--accent); padding-top: .5rem; }
+.stat b { display: block; font-family: var(--f-display); font-size: 1.7rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .85rem; color: var(--muted); }
+
+.tablewrap { overflow-x: auto; margin-block: 1rem; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: .95rem; }
+th, td { text-align: left; padding: .65rem .85rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+tr:last-child td { border-bottom: 0; }
+
+.note { background: var(--warn-soft); border-left: 4px solid var(--warn); padding: .8rem 1rem; border-radius: 0 6px 6px 0; margin-block: 1rem; max-width: 70ch; }
+.note b { color: var(--warn); }
+
+.steps { margin-block: 1.25rem; display: grid; gap: 1.5rem; }
+.step h3 { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap; }
+.step h3 .when { font-family: var(--f-mono); font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.check { display: flex; gap: .7rem; align-items: flex-start; padding: .45rem 0; cursor: pointer; border-bottom: 1px dashed var(--line); }
+.check:last-child { border-bottom: 0; }
+.check input { width: 1.15rem; height: 1.15rem; margin-top: .22rem; flex: none; accent-color: var(--accent); }
+.check span { min-width: 0; }
+.check input:checked + span { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--line); }
+.progress { display: flex; align-items: center; gap: .75rem; font-size: .85rem; color: var(--muted); margin-block: .5rem 1rem; }
+.bar { flex: 1; max-width: 240px; height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--ok); transition: width .25s; }
+@media (prefers-reduced-motion: reduce) { .bar i { transition: none; } html { scroll-behavior: auto; } }
+button.reset { font: inherit; font-size: .8rem; background: none; border: 1px solid var(--line); color: var(--muted); padding: .2rem .6rem; border-radius: 6px; cursor: pointer; }
+.dos { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); margin-block: 1rem; }
+.dos .box h3 { color: var(--ok); } .dos .box.dont h3 { color: var(--warn); }
+footer { padding-block: 2rem 4rem; color: var(--muted); font-size: .9rem; }
+</style>
+
+<div class="wrap">
+<header class="top">
+  <span class="label">Atelier des Abbesses · Paris Private</span>
+  <h1>Onboarding de l'équipe</h1>
+  <p>Un parcours pour le dirigeant, un pour la collaboratrice administrative et commerciale, un pour la stagiaire en communication digitale. Chacun commence par la partie commune, puis suit son propre parcours.</p>
+  <div class="meta"><span>Version du 3 novembre 2026</span><span>Outils : Dolibarr · Payload CMS · Postiz · Pennylane</span></div>
+</header>
+
+<nav class="tabs" aria-label="Sections">
+  <a href="#commun">Pour tous</a>
+  <a href="#ceo">Dirigeant</a>
+  <a href="#collaboratrice">Collaboratrice</a>
+  <a href="#stagiaire">Stagiaire com</a>
+</nav>
+
+<section class="part" id="commun">
+  <h2>Ce qu'il faut savoir avant tout le reste</h2>
+  <p class="intro">Dix minutes de lecture. Ces repères valent pour les trois postes.</p>
+
+  <div class="grid">
+    <div class="box">
+      <h3>Le lieu</h3>
+      <p>8 passage des Abbesses, Paris 18e, près du Sacré-Cœur. Jusqu'à 150 personnes debout ou 80 assises.</p>
+      <p>Espaces : salle des Je t'aime (sur le jardin), salle des Miroirs (lumineuse ou plongée dans le noir), accueil des Je t'aime, Jardin d'Éden (cour plantée avec bar). Le rooftop « I Love You » est annoncé, pas encore ouvert.</p>
+    </div>
+    <div class="box">
+      <h3>L'entreprise</h3>
+      <p>SAS de 3 à 4 personnes. Agence événementielle Paris Private depuis 2018, installée dans son propre lieu. Clients en France et dans le monde, souvent via des apporteurs d'affaires.</p>
+      <p>Deux publics à poids égal : les entreprises (séminaires, lancements, soirées de marque, tournages) et les particuliers (mariages, anniversaires, dîners).</p>
+    </div>
+    <div class="box">
+      <h3>Les deux actions qui comptent</h3>
+      <p>Tout converge vers <b>une demande de devis</b> ou <b>une visite de l'Atelier</b>. Elles ont la même importance.</p>
+      <p>Engagement affiché : une réponse sous 24 heures.</p>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b>8 ans</b><span>d'expérience</span></div>
+    <div class="stat"><b>300+</b><span>événements réalisés</span></div>
+    <div class="stat"><b>150</b><span>personnes maximum</span></div>
+    <div class="stat"><b>4</b><span>langues du site : fr, en, de, es</span></div>
+  </div>
+
+  <h3>Les outils et qui s'en sert</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Outil</th><th>Sert à</th><th>Dirigeant</th><th>Collaboratrice</th><th>Stagiaire</th></tr></thead>
+    <tbody>
+      <tr><td><b>Dolibarr</b><br><span class="mono">extrapp.fr</span><br><span class="mono">extrapp.fr/atelier</span></td><td>Tiers, devis, factures, 2 comptes bancaires</td><td>Lecture via le tableau de bord</td><td>Saisie complète</td><td>Aucun accès</td></tr>
+      <tr><td><b>Payload CMS</b><br><span class="mono">parisprivate.fr</span></td><td>Pages et articles du site, réglages de marque et de SEO</td><td>Validation avant publication</td><td>Aucun besoin</td><td>Rédaction des articles</td></tr>
+      <tr><td><b>Postiz</b></td><td>Planifier les publications Instagram, Facebook, LinkedIn</td><td>Relecture</td><td>Aucun besoin</td><td>Outil principal</td></tr>
+      <tr><td><b>Pennylane</b></td><td>Comptabilité, côté expert-comptable</td><td>Aucun besoin</td><td>Envoie les pièces</td><td>Aucun accès</td></tr>
+    </tbody>
+  </table></div>
+  <p class="label" style="margin-top:-.25rem">Répartition proposée, à valider par le dirigeant. Les droits réels se règlent dans chaque outil.</p>
+
+  <div class="dos">
+    <div class="box"><h3>Toujours</h3>
+      <ul>
+        <li>Répondre à une demande en moins de 24 heures.</li>
+        <li>Mettre à jour le statut dans Dolibarr au moment de l'action, pas après.</li>
+        <li>Demander quand un chiffre, un prix ou un nom de client n'est pas écrit quelque part.</li>
+      </ul></div>
+    <div class="box dont"><h3>Jamais</h3>
+      <ul>
+        <li>Inventer un prix, un chiffre, un témoignage ou une référence client. Le site n'affiche aucun prix public.</li>
+        <li>Choisir entre 240 m² et 300 m² : la surface est à trancher par le dirigeant.</li>
+        <li>Lancer un « seed » ou une migration Payload en local : cela touche la base de production.</li>
+      </ul></div>
+  </div>
+
+  <h3>Contact et ressources</h3>
+  <p>Contact public : Mathilda Lindell, <span class="mono">contact@parisprivate.fr</span>, <span class="mono">+33 6 45 85 20 07</span>. Documents de référence dans le dossier du projet : <code>payload/PRODUCT.md</code> (positionnement), <code>payload/AGENTS.md</code> (règles du site), <code>contenus-seminaire/</code> (contenus prêts), <code>dashboard-ceo.html</code> (tableau de bord).</p>
+</section>
+
+<section class="part" id="ceo" data-part="ceo">
+  <span class="who">Dirigeant</span>
+  <h2>Piloter sans entrer dans Dolibarr</h2>
+  <p class="intro">Objectif : voir l'état de l'activité en cinq minutes, décider ce qui bloque l'équipe, et valider ce qui sort sous le nom de la marque.</p>
+  <div class="progress"><span class="count"></span><div class="bar"><i></i></div><button class="reset" type="button">Tout décocher</button></div>
+
+  <div class="steps">
+    <div class="step"><h3>Jour 1 <span class="when">30 minutes</span></h3>
+      <label class="check"><input type="checkbox" id="c1"><span>Ouvrir <code>dashboard-ceo.html</code> et lire la synthèse pour la direction en tête de page.</span></label>
+      <label class="check"><input type="checkbox" id="c2"><span>Parcourir les trois blocs : prospection, devis, factures émises.</span></label>
+      <label class="check"><input type="checkbox" id="c3"><span>Lire la liste « À faire cette semaine par la collaboratrice » et la valider ou la corriger avec elle.</span></label>
+      <label class="check"><input type="checkbox" id="c4"><span>Vérifier que la clé d'accès Dolibarr fonctionne, pour pouvoir régénérer le tableau de bord (<code>dolibarr_ceo.py</code>, lecture seule).</span></label>
+    </div>
+    <div class="step"><h3>Première semaine <span class="when">décisions</span></h3>
+      <label class="check"><input type="checkbox" id="c5"><span>Trancher la surface officielle du lieu : 240 m² ou 300 m².</span></label>
+      <label class="check"><input type="checkbox" id="c6"><span>Confirmer avec l'expert-comptable : régime de TVA, impôt sur les sociétés, date de fin d'exercice.</span></label>
+      <label class="check"><input type="checkbox" id="c7"><span>Fixer la règle de paiement : acompte et solde, délais, devises acceptées.</span></label>
+      <label class="check"><input type="checkbox" id="c8"><span>Préciser la garantie des créances : assurance-crédit, acomptes, ou les deux.</span></label>
+      <label class="check"><input type="checkbox" id="c9"><span>Décider qui valide les publications avant leur mise en ligne, et sous quel délai.</span></label>
+      <label class="check"><input type="checkbox" id="c10"><span>Renouveler le jeton d'accès du site en production (le serveur <code>payload-production</code> le refuse aujourd'hui).</span></label>
+    </div>
+    <div class="step"><h3>Premier mois <span class="when">installer le rythme</span></h3>
+      <label class="check"><input type="checkbox" id="c11"><span>Fixer un point de 15 minutes chaque lundi avec la collaboratrice, tableau de bord à l'écran.</span></label>
+      <label class="check"><input type="checkbox" id="c12"><span>Choisir un objectif de transformation des devis. Point de départ : 9 %.</span></label>
+      <label class="check"><input type="checkbox" id="c13"><span>Relire le calendrier de publications de la stagiaire une fois par semaine.</span></label>
+      <label class="check"><input type="checkbox" id="c14"><span>Faire la première clôture mensuelle avec l'expert-comptable.</span></label>
+    </div>
+  </div>
+
+  <h3>Situation de départ au 3 novembre 2026</h3>
+  <div class="stats">
+    <div class="stat"><b>511</b><span>prospects, dont 171 clients</span></div>
+    <div class="stat"><b>9 %</b><span>des 46 devis émis sont signés</span></div>
+    <div class="stat"><b>67 747 €</b><span>TTC restant à encaisser, 28 factures</span></div>
+    <div class="stat"><b>26</b><span>factures échues, 58 987 € TTC</span></div>
+    <div class="stat"><b>42</b><span>devis ouverts, 280 448 € HT</span></div>
+    <div class="stat"><b>390</b><span>brouillons à trier</span></div>
+  </div>
+  <div class="note"><b>À savoir.</b> Aucune facture n'est marquée payée dans Dolibarr. Le reste à encaisser est donc probablement surestimé tant que les règlements reçus ne sont pas saisis.</div>
+
+  <h3>Les cinq chiffres à suivre chaque lundi</h3>
+  <ul>
+    <li>Taux de transformation des devis émis en devis signés.</li>
+    <li>Reste à encaisser et part échue.</li>
+    <li>Devis sans réponse depuis plus de 30 jours.</li>
+    <li>Nombre de visites de l'Atelier programmées.</li>
+    <li>Demandes reçues sans réponse après 24 heures. Cible : zéro.</li>
+  </ul>
+</section>
+
+<section class="part" id="collaboratrice" data-part="collab">
+  <span class="who">Collaboratrice</span>
+  <h2>Faire entrer l'argent et fiabiliser Dolibarr</h2>
+  <p class="intro">Objectif : que chaque devis ait une réponse, chaque facture un statut juste, et que l'expert-comptable trouve des pièces propres dans Dolibarr.</p>
+  <div class="progress"><span class="count"></span><div class="bar"><i></i></div><button class="reset" type="button">Tout décocher</button></div>
+
+  <div class="steps">
+    <div class="step"><h3>Jour 1 <span class="when">prise en main</span></h3>
+      <label class="check"><input type="checkbox" id="d1"><span>Se connecter aux deux instances Dolibarr : <span class="mono">extrapp.fr</span> et <span class="mono">extrapp.fr/atelier</span>.</span></label>
+      <label class="check"><input type="checkbox" id="d2"><span>Repérer les 2 comptes bancaires suivis et leur numéro dans Dolibarr.</span></label>
+      <label class="check"><input type="checkbox" id="d3"><span>Lire le tableau de bord et la liste d'actions de la semaine avec le dirigeant.</span></label>
+      <label class="check"><input type="checkbox" id="d4"><span>Parcourir un devis signé de bout en bout : devis, facture d'acompte, facture de solde, règlement.</span></label>
+    </div>
+    <div class="step"><h3>Première semaine <span class="when">les six actions</span></h3>
+      <label class="check"><input type="checkbox" id="d5"><span><b>Rapprocher les paiements.</b> Comparer le relevé bancaire aux 28 factures et saisir chaque règlement reçu.</span></label>
+      <label class="check"><input type="checkbox" id="d6"><span><b>Relancer les factures échues.</b> Mail cette semaine, puis appel au-delà de 15 jours de retard. 26 factures sont concernées.</span></label>
+      <label class="check"><input type="checkbox" id="d7"><span><b>Commencer par les plus gros montants.</b> Les trois premiers : 8 520 €, 5 040 € et 4 648 € TTC.</span></label>
+      <label class="check"><input type="checkbox" id="d8"><span><b>Relancer les devis ouverts.</b> Appeler chaque client, obtenir « signé » ou « refusé », mettre le statut à jour. Commencer par les 5 devis en attente depuis plus de 30 jours.</span></label>
+      <label class="check"><input type="checkbox" id="d9"><span><b>Trier les 390 brouillons.</b> Envoyer les devis valides, supprimer les doublons et les devis obsolètes.</span></label>
+      <label class="check"><input type="checkbox" id="d10"><span><b>Noter le motif de chaque refus</b> dans la fiche du devis.</span></label>
+    </div>
+    <div class="step"><h3>Premier mois <span class="when">le rythme</span></h3>
+      <label class="check"><input type="checkbox" id="d11"><span>Installer la routine : relance de chaque devis envoyé à J+3 et J+10.</span></label>
+      <label class="check"><input type="checkbox" id="d12"><span>Faire le rapprochement bancaire chaque semaine, pas chaque mois.</span></label>
+      <label class="check"><input type="checkbox" id="d13"><span>Préparer la clôture : toutes les factures du mois validées, payées ou relancées, avant l'envoi à l'expert-comptable.</span></label>
+      <label class="check"><input type="checkbox" id="d14"><span>Repérer les clients hors zone euro et demander au dirigeant la règle de devise.</span></label>
+    </div>
+  </div>
+
+  <h3>Le circuit d'une vente</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Étape</th><th>Dans Dolibarr</th><th>Règle</th></tr></thead>
+    <tbody>
+      <tr><td>Demande reçue</td><td>Tiers créé ou retrouvé, prospect à jour</td><td>Réponse sous 24 heures</td></tr>
+      <tr><td>Devis envoyé</td><td>Devis validé puis envoyé, plus de brouillon</td><td>Relance à J+3 et J+10</td></tr>
+      <tr><td>Devis signé</td><td>Statut signé, facture d'acompte</td><td>Suivre la règle acompte et solde du dirigeant</td></tr>
+      <tr><td>Événement tenu</td><td>Facture de solde</td><td>Émise dans la semaine qui suit</td></tr>
+      <tr><td>Encaissement</td><td>Règlement saisi sur la bonne facture</td><td>Mail à l'échéance, appel après 15 jours de retard</td></tr>
+      <tr><td>Clôture</td><td>Pièces complètes et propres</td><td>L'expert-comptable les récupère dans Dolibarr pour Pennylane</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><b>Prudence.</b> Ne supprime jamais une facture validée. Pour corriger, passe par un avoir et préviens le dirigeant.</div>
+</section>
+
+<section class="part" id="stagiaire" data-part="stag">
+  <span class="who">Stagiaire com</span>
+  <h2>Faire voir l'Atelier, donner envie de demander un devis</h2>
+  <p class="intro">Objectif : une présence régulière sur Instagram, Facebook et LinkedIn, et des articles qui répondent aux questions des clients. Chaque publication mène vers un devis ou une visite.</p>
+  <div class="progress"><span class="count"></span><div class="bar"><i></i></div><button class="reset" type="button">Tout décocher</button></div>
+
+  <div class="steps">
+    <div class="step"><h3>Jour 1 <span class="when">comprendre la marque</span></h3>
+      <label class="check"><input type="checkbox" id="s1"><span>Lire <code>payload/PRODUCT.md</code> en entier : public, positionnement, ce qui est vrai et ce qui ne l'est pas.</span></label>
+      <label class="check"><input type="checkbox" id="s2"><span>Parcourir le site parisprivate.fr sur mobile : c'est là que la plupart des visiteurs arrivent.</span></label>
+      <label class="check"><input type="checkbox" id="s3"><span>Obtenir un accès Postiz et connecter ou vérifier les trois comptes : Instagram @parisprivate, Facebook parisprivateevent, LinkedIn.</span></label>
+      <label class="check"><input type="checkbox" id="s4"><span>Ouvrir <code>contenus-seminaire/</code> : article, PDF et visuel du séminaire, déjà prêts à décliner.</span></label>
+    </div>
+    <div class="step"><h3>Première semaine <span class="when">premières publications</span></h3>
+      <label class="check"><input type="checkbox" id="s5"><span>Préparer 3 publications à partir de l'article séminaire : un angle lumière du lieu, un angle déroulé de journée, un angle check-list.</span></label>
+      <label class="check"><input type="checkbox" id="s6"><span>Les planifier dans Postiz en brouillon et les faire relire par le dirigeant avant mise en ligne.</span></label>
+      <label class="check"><input type="checkbox" id="s7"><span>Dresser la liste des photos et vidéos disponibles : salle des Miroirs, Jardin d'Éden, entrée des Je t'aime, accueil, rooftop.</span></label>
+      <label class="check"><input type="checkbox" id="s8"><span>Noter les photos d'événements qui manquent et les demander à l'équipe après chaque événement.</span></label>
+    </div>
+    <div class="step"><h3>Premier mois <span class="when">installer la régularité</span></h3>
+      <label class="check"><input type="checkbox" id="s9"><span>Tenir un calendrier de publications sur 4 semaines, avec un cap par canal (Instagram, Facebook, LinkedIn).</span></label>
+      <label class="check"><input type="checkbox" id="s10"><span>Rédiger un article de blog dans Payload, en français d'abord, selon les règles de <code>payload/AGENTS.md</code>.</span></label>
+      <label class="check"><input type="checkbox" id="s11"><span>Relever chaque semaine les publications qui ont déclenché une demande de devis ou de visite.</span></label>
+      <label class="check"><input type="checkbox" id="s12"><span>Proposer au dirigeant un point mensuel : ce qui a marché, ce qu'on arrête.</span></label>
+    </div>
+  </div>
+
+  <h3>Cinq sujets qui reviennent</h3>
+  <div class="grid">
+    <div class="box"><b>Le lieu.</b> Lumière, verrières, poutres noires, plantes, jardin. Le lieu est la preuve : montre-le avant de parler de l'agence.</div>
+    <div class="box"><b>Entreprises.</b> Séminaires, lancements, soirées de marque, tournages.</div>
+    <div class="box"><b>Particuliers.</b> Mariages, anniversaires, dîners, baby showers.</div>
+    <div class="box"><b>Coulisses et prestataires.</b> Traiteur, mixologie, DJ, photo, scénographie, le coordinateur dédié.</div>
+    <div class="box"><b>Références.</b> Seulement les clients déjà cités sur le site, après accord du dirigeant pour chaque post.</div>
+  </div>
+
+  <div class="dos">
+    <div class="box"><h3>Ton et marque</h3>
+      <ul>
+        <li>Bleu nuit <span class="mono">#00000f</span>, monogramme « P » conservé tel quel.</li>
+        <li>Signature : « Concepteur d'évènements sur mesure où l'excellence rencontre l'élégance ».</li>
+        <li>Le sur-mesure se montre par le détail (espaces nommés, déroulé), pas par des superlatifs.</li>
+        <li>Contenu source en français, puis en, de, es pour le site.</li>
+      </ul></div>
+    <div class="box dont"><h3>À éviter</h3>
+      <ul>
+        <li>Annoncer un prix, une surface ou une date d'ouverture du rooftop sans accord écrit.</li>
+        <li>Publier un témoignage ou une citation client qui n'existe pas.</li>
+        <li>Toucher aux réglages de marque du site (couleurs, logo, SEO) sans en parler au dirigeant.</li>
+        <li>Lancer un « seed » ou une migration Payload : demande à quelqu'un de l'équipe technique.</li>
+      </ul></div>
+  </div>
+</section>
+
+<footer>Les listes à cocher se souviennent de ton avancement dans ce navigateur seulement. Les points marqués « proposé » ou « à valider » sont des choix à confirmer par le dirigeant.</footer>
+</div>
+
+<script>
+(function () {
+  var KEY = "onboarding-abbesses-v1";
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { state = {}; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+  function refresh(part) {
+    var boxes = part.querySelectorAll('input[type="checkbox"]');
+    var done = 0;
+    boxes.forEach(function (b) { if (b.checked) done++; });
+    part.querySelector(".count").textContent = done + " sur " + boxes.length + " faits";
+    part.querySelector(".bar i").style.width = (boxes.length ? (100 * done / boxes.length) : 0) + "%";
+  }
+  document.querySelectorAll("section[data-part]").forEach(function (part) {
+    part.querySelectorAll('input[type="checkbox"]').forEach(function (b) {
+      b.checked = !!state[b.id];
+      b.addEventListener("change", function () { state[b.id] = b.checked; save(); refresh(part); });
+    });
+    part.querySelector(".reset").addEventListener("click", function () {
+      part.querySelectorAll('input[type="checkbox"]').forEach(function (b) { b.checked = false; delete state[b.id]; });
+      save(); refresh(part);
+    });
+    refresh(part);
+  });
+})();
+</script>
