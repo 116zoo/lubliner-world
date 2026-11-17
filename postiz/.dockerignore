@@ -12,6 +12,26 @@ dist
 /apps/workers/dist
 /apps/cron/dist
 /apps/commands/dist
+# The lightweight LinkedIn overlay image copies only the two compiled provider
+# files from backend/orchestrator; keep those paths in the build context.
+!/apps/backend/
+!/apps/backend/dist/
+!/apps/backend/dist/libraries/
+!/apps/backend/dist/libraries/nestjs-libraries/
+!/apps/backend/dist/libraries/nestjs-libraries/src/
+!/apps/backend/dist/libraries/nestjs-libraries/src/integrations/
+!/apps/backend/dist/libraries/nestjs-libraries/src/integrations/social/
+!/apps/backend/dist/libraries/nestjs-libraries/src/integrations/social/linkedin.provider.js
+!/apps/backend/dist/libraries/nestjs-libraries/src/integrations/social/linkedin.page.provider.js
+!/apps/orchestrator/
+!/apps/orchestrator/dist/
+!/apps/orchestrator/dist/libraries/
+!/apps/orchestrator/dist/libraries/nestjs-libraries/
+!/apps/orchestrator/dist/libraries/nestjs-libraries/src/
+!/apps/orchestrator/dist/libraries/nestjs-libraries/src/integrations/
+!/apps/orchestrator/dist/libraries/nestjs-libraries/src/integrations/social/
+!/apps/orchestrator/dist/libraries/nestjs-libraries/src/integrations/social/linkedin.provider.js
+!/apps/orchestrator/dist/libraries/nestjs-libraries/src/integrations/social/linkedin.page.provider.js
 .devcontainer
 **/.git
 **/*.md
