@@ -46,6 +46,8 @@ jobs:
 
       - name: Build backend and orchestrator
         working-directory: postiz
+        env:
+          NODE_OPTIONS: --max-old-space-size=6144
         run: |
           pnpm --filter ./apps/backend run build
           pnpm --filter ./apps/orchestrator run build
